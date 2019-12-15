@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Share Contact{% endblock %}
+
+{% block body %}
+
+    <a class="btn btn-primary float-right" href="{{ path('contact.index') }}">Back to contacts list</a>
+    <h2 class="page-header">Share Contact</h2>
+    <hr>
+    {% if shared is not null %}
+        <h4>Currently shared with: <strong><i>{{ shared }}</i></strong></h4>
+        <a class="btn btn-danger float-right" style="margin-top: -42px;" href="{{ path('contact.cancel_sharing', {id:contact.id}) }}">Cancel sharing</a>
+        <hr>
+    {% endif %}
+    {{ form(form) }}
+
+
+{% endblock %}

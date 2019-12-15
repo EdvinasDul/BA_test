@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Contact{% endblock %}
+
+{% block body %}
+
+    <a class="btn btn-primary float-right" href="{{ path('contact.index') }}">Back to contacts list</a>
+    <h2 class="page-header">Edit existing contact</h2>
+    <hr>
+    {{ form(form) }}
+
+
+{% endblock %}

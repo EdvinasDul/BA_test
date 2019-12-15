@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block body %}
+
+ 
+        <a href="{{ path('contact.create') }}" class="btn btn-success float-right">Create new Contact</a>
+        <h2 class="page-header">List of all Contacts</h2>
+
+		{% if contacts is empty %}
+			<h1 style="margin-top: 50px; margin-left: 20vw;">You don't have any contacts...</h1>
+		{% else %}
+			<table class="table table-striped">
+			<thead>
+				<tr>
+				<th scope="col">#</th>
+				<th scope="col">Full Name</th>
+				<th scope="col">Phone Number</th>
+				<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for contact in contacts %}
+				<tr>
+				<th scope="row">{{ contact.getId() }}</th>
+				<td>{{ contact.getFullName() }}</td>
+				<td>{{ contact.getPhoneNumber() }}</td>
+				<td>
+					<a href="{{ path('contact.edit', {id:contact.id}) }}" class="btn btn-primary">Edit</a>
+					<a href="{{ path('contact.delete', {id:contact.id}) }}" class="btn btn-danger">Delete</a>
+					{% if contact.id not in notOwned %}
+						<a href="{{ path('contact.share', {id:contact.id}) }}" class="btn btn-warning">Share</a>
+					{% endif %}
+				</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+			</table>
+		{% endif %}
+    
+{% endblock %}

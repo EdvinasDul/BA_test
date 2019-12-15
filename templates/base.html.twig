@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ path('contact.index') }}">ContactsApp</a>
+            <!-- Button for responsive menu -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Display nav-items if the user is logged in -->
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('contact.index') }}">My Contacts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Log out</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('register') }}">Register</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+        </nav>
+        <!-- end of navbar-->
+        <div class="container" style="margin-top: 40px;">
+          <!-- Flash messaged handling-->  
+            <div class="row">
+                {% for flash_message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success col-md-12">
+                    {{ flash_message }}
+                </div>
+                {% endfor %}
+
+                {% for flash_message in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger col-md-12">
+                    {{ flash_message }}
+                </div>
+                {% endfor %}
+                
+                {% if errors is defined %}
+                  {% for error in errors %}
+                  <div class="alert alert-danger col-md-12">
+                      {{ error }}
+                  </div>  
+                  {% endfor %}
+                {% endif %}
+            </div>
+            <!-- End of Flash messaged handling-->
+            {% block body %}{% endblock %}
+        </div>
+        <!-- Footer -->
+        <footer>
+          <div class="container fixed-bottom" style="padding-right: 45px;">
+            <hr>
+            <p class="text-center">&copy; Edvinas Dulskas 2019</p> 
+            <p class="text-center">GitHub: <a href="https://github.com/EdvinasDul/BA_test/" target="_blank">EdvinasDul</a></p>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
